@@ -2,7 +2,7 @@
 
 **Name:** Nguyễn Minh Mẫn  
 **Date:** 11 March 2026  
-**Repo:** https://github.com/minhman2002/devops-intern-final
+**Repo:** https://github.com/Makino2002/devops-intern-final
 
 ---
 
