@@ -1,23 +1,28 @@
-job "hello" {
+job "hello-devops" {
   datacenters = ["dc1"]
   type        = "service"
 
   group "web" {
+    count = 1
+
     network {
-      port "http" { static = 3000 }
+      port "http" {
+        static = 3000
+        to     = 3000
+      }
     }
 
-    task "flask-app" {
+    task "app" {
       driver = "docker"
 
       config {
-        image = "<minhman2020/hello-devops:latest"
+        image = "minhman2002/hello-devops:latest"
         ports = ["http"]
       }
 
       resources {
-        cpu    = 100   # MHz
-        memory = 128   # MB
+        cpu    = 100
+        memory = 128
       }
     }
   }
