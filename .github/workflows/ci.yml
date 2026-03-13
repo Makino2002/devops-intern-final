@@ -54,7 +54,7 @@ jobs:
       - name: Start Nomad agent
         run: |
           pkill nomad || true
-          sudo nomad agent -dev -bind=0.0.0.0 -log-level=ERROR > /tmp/nomad.log 2>&1 &
+          sudo nomad agent -dev -bind=0.0.0.0 -log-level=WARN > /tmp/nomad.log 2>&1 &
           sleep 8
 
       - name: Deploy with Nomad
