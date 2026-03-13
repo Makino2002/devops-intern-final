@@ -39,3 +39,28 @@ jobs:
         run: |
           echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USER }} --password-stdin
           docker push ${{ secrets.DOCKER_USER }}/hello-devops:latest
+  cd:
+    name: CD — Deploy to Vagrant VM
+    runs-on: self-hosted
+    needs: ci
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Pull latest Docker image
+        run: docker pull ${{ secrets.DOCKER_USER }}/hello-devops:latest
+
+      - name: Start Nomad agent
+        run: |
+          pkill nomad || true
+          sudo nomad agent -dev -bind=0.0.0.0 -log-level=ERROR > /tmp/nomad.log 2>&1 &
+          sleep 8
+
+      - name: Deploy with Nomad
+        run: nomad job run nomad/hello.nomad
+
+      - name: Verify app is running
+        run: |
+          sleep 10
+          curl -f http://localhost:3000 && echo 'Deploy OK!'
