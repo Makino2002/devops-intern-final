@@ -8,7 +8,9 @@ job "hello-devops" {
 
       config {
         image = "minhman2002/hello-devops:latest"
-        ports = ["http"]
+        port_map {
+          http = 3000
+        }
       }
 
       resources {
@@ -16,6 +18,7 @@ job "hello-devops" {
         memory = 256
 
         network {
+          mbits = 10
           port "http" {
             static = 3000
           }
