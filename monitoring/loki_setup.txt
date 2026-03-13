@@ -1,0 +1,28 @@
+=== Grafana Loki — Monitoring Setup ===
+
+Environment: Vagrant VM (Ubuntu 22.04) inside Windows
+Access from Windows browser: http://localhost:3100
+
+--- How to start Loki ---
+1. SSH into VM:
+   vagrant ssh
+
+2. Run Loki container:
+   docker run -d --name=loki -p 3100:3100 grafana/loki:2.8.2
+
+3. Check Loki is ready:
+   curl http://localhost:3100/ready
+   Expected output: ready
+
+--- Commands to view logs ---
+# View Docker container logs (with timestamps):
+   docker logs --timestamps <container_id>
+
+# Follow logs real-time:
+   docker logs --timestamps --follow <container_id>
+
+# View Nomad job logs:
+   nomad alloc logs <alloc_id>
+
+--- Stop Loki ---
+   docker stop loki && docker rm loki
